@@ -1,0 +1,28 @@
+{
+  "name": "image-filter-sepia",
+  "version": "0.0.1",
+  "description": "Small library to apply a sepia filter to a image",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify sandbox/sandbox.js > sandbox/bundle.js"
+  },
+  "author": "Ricardo Canastro",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/canastro/image-filter-sepia"
+  },
+  "bugs": {
+    "url": "https://github.com/canastro/image-filter-sepia/issues"
+  },
+  "keywords": [
+    "image",
+    "image-sepia",
+    "sepia",
+    "transformation",
+    "pixel"
+  ],
+  "devDependencies": {
+    "browserify": "^13.0.0"
+  }
+}
