@@ -39,6 +39,15 @@ function transform(canvas, context, imageData) {
         data[i + 2] = (r * 0.272) + (g * 0.534) + (b * 0.131);
     };
 
+    return imageData;
+}
+
+/**
+ * @name convertToDataURL
+ * @param {object} canvas
+ * @param {object} context
+ */
+function convertToDataURL(canvas, context, imageData) {
     context.putImageData(imageData, 0, 0);
     return canvas.toDataURL();
 }
@@ -48,6 +57,7 @@ function transform(canvas, context, imageData) {
  * @param {object} options
  * @param {string} options.data - data of a image extracted from a canvas
  * @param {string} options.contrast - contrast value to apply
+ * @param {bool} options.asDataURL
  */
 module.exports = function sepia(options) {
     var factor;
@@ -65,6 +75,10 @@ module.exports = function sepia(options) {
     options.data = getPixels(canvas, context, options.data);
 
     result = transform(canvas, context, options.data);
+
+    if (options.asDataURL) {
+        return convertToDataURL(canvas, context, result);
+    }
 
     return result;
 }

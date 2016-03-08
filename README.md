@@ -11,12 +11,15 @@ npm install image-filter-sepia --save
 ## Usage
 It applies a sepia transformation to a base64 image. If you want a more complete library, please check image-filters that wraps this and other libraries to provide a more complete suite of image filters.
 
+The default operation of this library is to consume imageData and return transformed imageData, but to facilitate a bit you can pass `asDataURL` as true to return a dataURL that you can inject into a image tag.
+
 JS file:
 ```js
 var imageFilterSepia = require('image-sepia');
 
 var result = imageFilterSepia({
-    data: IMAGE_DATA
+    data: IMAGE_DATA,
+    asDataURL: true //if you want data to data transformation you don't need to include this
 });
 ```
 
