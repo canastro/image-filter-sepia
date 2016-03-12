@@ -1,26 +1,4 @@
-/**
- * @name getCanvas
- * @param {number} w - width
- * @param {number} h - height
- */
-function getCanvas(w, h) {
-    var canvas = document.createElement('canvas');
-    canvas.width = w;
-    canvas.height = h;
-
-    return canvas;
-}
-
-/**
- * @name getPixels
- * @param {object} canvas
- * @param {object} context
- * @param {object} imageData
- */
-function getPixels(canvas, context, imageData) {
-    context.putImageData(imageData, 0, 0);
-    return context.getImageData(0, 0, canvas.width, canvas.height);
-}
+var utils = require('./utils');
 
 /**
  * @name transform
@@ -28,7 +6,7 @@ function getPixels(canvas, context, imageData) {
  * @param {object} context
  * @param {object} imageData
  */
-function transform(canvas, context, imageData) {
+function transform(imageData) {
     var data = imageData.data;
     for (var i = 0; i < data.length; i+= 4) {
         var r = data[i];
@@ -40,16 +18,6 @@ function transform(canvas, context, imageData) {
     };
 
     return imageData;
-}
-
-/**
- * @name convertToDataURL
- * @param {object} canvas
- * @param {object} context
- */
-function convertToDataURL(canvas, context, imageData) {
-    context.putImageData(imageData, 0, 0);
-    return canvas.toDataURL();
 }
 
 /**
@@ -69,15 +37,15 @@ module.exports = function sepia(options) {
         throw new Error('image-filter-sepia:: invalid options provided');
     }
 
-    canvas = getCanvas(options.data.width, options.data.height);
+    canvas = utils.getCanvas(options.data.width, options.data.height);
     context = canvas.getContext('2d');
 
-    options.data = getPixels(canvas, context, options.data);
+    options.data = utils.getPixels(canvas, context, options.data);
 
-    result = transform(canvas, context, options.data);
+    result = transform(options.data);
 
     if (options.asDataURL) {
-        return convertToDataURL(canvas, context, result);
+        return utils.convertToDataURL(canvas, context, result);
     }
 
     return result;

@@ -1,4 +1,4 @@
-var imageFilterSepia = require('../index');
+var imageFilterSepia = require('../src/index');
 
 function applyResults(selector, src) {
     var target;

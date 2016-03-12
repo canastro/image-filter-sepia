@@ -1,3 +1,6 @@
+![build status](https://travis-ci.org/canastro/image-filter-sepia.svg?branch=master)
+[![npm version](https://badge.fury.io/js/image-filter-sepia.svg)](https://badge.fury.io/js/image-filter-sepia)
+
 # image-sepia
 
 Small library to apply a sepia transformation to a image.
