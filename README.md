@@ -1,9 +1,21 @@
 ![build status](https://travis-ci.org/canastro/image-filter-sepia.svg?branch=master)
 [![npm version](https://badge.fury.io/js/image-filter-sepia.svg)](https://badge.fury.io/js/image-filter-sepia)
+[![codecov](https://codecov.io/gh/canastro/image-filter-sepia/branch/master/graph/badge.svg)](https://codecov.io/gh/canastro/image-filter-sepia)
 
-# image-sepia
+# image-filter-sepia
 
-Small library to apply a sepia transformation to a image.
+Small library to apply a sepia transformation to a image relying on `image-filter-core` handle the transformation and distribute work with webworkers.
+
+Other related modules:
+* [image-filter-core](https://www.npmjs.com/package/image-filter-core)
+* [image-filter-contrast](https://www.npmjs.com/package/image-filter-contrast)
+* [image-filter-sepia](https://www.npmjs.com/package/image-filter-sepia)
+* [image-filter-threshold](https://www.npmjs.com/package/image-filter-threshold)
+* [image-filter-sepia](https://www.npmjs.com/package/image-filter-sepia)
+* [image-filter-invert](https://www.npmjs.com/package/image-filter-invert)
+* [image-filter-gamma](https://www.npmjs.com/package/image-filter-gamma)
+* [image-filter-colorize](https://www.npmjs.com/package/image-filter-colorize)
+* [image-filters](https://www.npmjs.com/package/image-filters)
 
 ## Install
 
@@ -14,19 +26,17 @@ npm install image-filter-sepia --save
 ## Usage
 It applies a sepia transformation to a base64 image. If you want a more complete library, please check image-filters that wraps this and other libraries to provide a more complete suite of image filters.
 
-The default operation of this library is to consume imageData and return transformed imageData, but to facilitate a bit you can pass `asDataURL` as true to return a dataURL that you can inject into a image tag.
+This library consumes ImageData and outputs ImageData in a Promise. You can use `image-filter-core` to convert from ImageData to dataURL.
 
 JS file:
 ```js
-var imageFilterSepia = require('image-sepia');
+var imageSepia = require('image-sepia');
+var nWorkers = 4;
 
-var result = imageFilterSepia({
-    data: IMAGE_DATA,
-    asDataURL: true //if you want data to data transformation you don't need to include this
-});
+imageSepia(IMAGE_DATA, 4);
 ```
 
-# Frequent questions:
+## Frequent questions:
 ### How can I get image data from a image tag?
 
 ```js
@@ -48,13 +58,14 @@ element.setAttribute('src', options.url);
 ### How can I use the output of this?
 
 ```js
-var result = imageFilterSepia({
-    data: IMAGE_DATA
-});
+var imageFilterCore = require('image-filter-core');
+var nWorkers = 4;
 
-var image = document.createElement('img');
-image.setAttribute('src', result);
-
-var target = document.getElementById('#dummy-target');
-target.appendChild(image);
+imageSepia(IMAGE_DATA, nWorkers)
+    .then(function (result) {
+        // result === ImageData object
+        var image = document.createElement('img');
+        image.setAttribute('src', imageFilterCore.convertImageDataToCanvasURL(imageData));
+        target.appendChild(image);
+    });
 ```
