@@ -12,5 +12,5 @@ module.exports =  function sepia(data, nWorkers) {
         throw new Error('image-filter-sepia:: invalid options provided');
     }
 
-    return imageFilterCore.apply(data, transform, nWorkers);
+    return imageFilterCore.apply(data, transform, null, nWorkers);
 };

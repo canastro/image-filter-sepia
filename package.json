@@ -1,6 +1,6 @@
 {
   "name": "image-filter-sepia",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Small library to apply a sepia transformation to a image",
   "main": "src/index.js",
   "scripts": {
